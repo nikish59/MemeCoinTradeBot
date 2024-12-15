@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.token &#8212; MemeCoinTradeBot 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for src.token</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">aiohttp</span>
+<span class="kn">from</span> <span class="nn">.queue_manager</span> <span class="kn">import</span> <span class="n">add_trade_to_queue</span>
+<span class="kn">from</span> <span class="nn">config.config</span> <span class="kn">import</span> <span class="n">token_config</span><span class="p">,</span> <span class="n">trade_config</span>
+<span class="kn">from</span> <span class="nn">config</span> <span class="kn">import</span> <span class="n">setup_logger</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">log_file</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Token">
+<a class="viewcode-back" href="../../src.html#src.token.Token">[docs]</a>
+<span class="k">class</span> <span class="nc">Token</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">creation_transaction</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Инициализация токена. Сохраняется информация о токене, время создания и конфигурация импульса.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history_transaction</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_transaction</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buyers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># Хранение уникальных покупателей</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inactive_task_flag</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buy_flag</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_per_purchased_token</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_per_sold_token</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_transaction</span><span class="p">(</span><span class="n">creation_transaction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mint</span> <span class="o">=</span> <span class="n">creation_transaction</span><span class="p">[</span><span class="s2">&quot;mint&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">creation_transaction</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creation_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sell_multiplier</span> <span class="o">=</span> <span class="n">trade_config</span><span class="p">[</span><span class="s2">&quot;sell_multiplier&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">trade_config</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_sols</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="si">}</span><span class="s2"> created with initial transaction </span><span class="si">{</span><span class="n">creation_transaction</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_social_activity</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="Token.check_social_activity">
+<a class="viewcode-back" href="../../src.html#src.token.Token.check_social_activity">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">check_social_activity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Функция для проверки социальных сетей</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">ssl</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>  <span class="c1"># Отключаем SSL-проверку</span>
+                    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;twitter&quot;</span><span class="p">,</span> <span class="s2">&quot;telegram&quot;</span><span class="p">,</span> <span class="s2">&quot;website&quot;</span><span class="p">]</span>
+                        <span class="n">missing_fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span> <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">missing_fields</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All required fields are present: </span><span class="si">{</span><span class="n">fields</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">sell_multiplier</span> <span class="o">=</span> <span class="n">trade_config</span><span class="p">[</span><span class="s2">&quot;sell_multiplier_with_social_activity&quot;</span><span class="p">]</span>
+                            <span class="k">return</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Request failed with status </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2"> for token </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error checking social activity for token </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Token.add_transaction">
+<a class="viewcode-back" href="../../src.html#src.token.Token.add_transaction">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Добавление новой транзакции в историю токена.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">transaction_with_timestamp</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="o">**</span><span class="n">transaction</span><span class="p">,</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history_transaction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transaction_with_timestamp</span><span class="p">)</span>
+
+        <span class="c1"># добавляем информацию, если мы покупали</span>
+        <span class="k">if</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;traderPublicKey&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">trade_config</span><span class="p">[</span><span class="s2">&quot;public_key&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">my_transaction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transaction_with_timestamp</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;txType&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;buy&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buy_flag</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="c1"># Рассчитываем цену одного купленного токена</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">price_per_purchased_token</span> <span class="o">=</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vSolInBondingCurve&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">transaction</span><span class="p">[</span>
+                    <span class="s2">&quot;vTokensInBondingCurve&quot;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inactive_task_flag</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Price per purchased token: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">price_per_purchased_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;txType&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;sell&quot;</span><span class="p">:</span>
+                <span class="c1"># Рассчитываем цену одного проданного токена</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">price_per_sold_token</span> <span class="o">=</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vSolInBondingCurve&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vTokensInBondingCurve&quot;</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Price per sold token: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">price_per_sold_token</span><span class="si">}</span><span class="s2">, profit: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">price_per_sold_token</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">price_per_purchased_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="kn">from</span> <span class="nn">src.update_stream</span> <span class="kn">import</span> <span class="n">unsubscribe_token_trade</span>
+                <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">unsubscribe_token_trade</span><span class="p">(</span><span class="n">token_address</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="p">))</span>
+
+        <span class="c1"># Добавление уникального покупателя, если тип транзакции - &quot;buy&quot;</span>
+        <span class="k">if</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;txType&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;buy&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buyers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;traderPublicKey&quot;</span><span class="p">])</span></div>
+
+        
+
+<div class="viewcode-block" id="Token.control_actions">
+<a class="viewcode-back" href="../../src.html#src.token.Token.control_actions">[docs]</a>
+    <span class="k">def</span> <span class="nf">control_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+
+        <span class="c1"># проверяем были ли ранее сделки с этим токеном и не вополняются ли транзакции по нему сейчас</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_transaction</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">inactive_task_flag</span><span class="p">:</span>
+            <span class="n">price_for_last_transaction</span> <span class="o">=</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vSolInBondingCurve&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vTokensInBondingCurve&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sell_multiplier</span> <span class="o">&gt;</span> <span class="n">price_for_last_transaction</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">price_per_purchased_token</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inactive_task_flag</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">add_trade_to_queue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="s2">&quot;sell&quot;</span><span class="p">))</span>
+
+        <span class="c1"># проверяем есть ли импульс у токена после совершения min_transactions</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_transaction</span><span class="p">)</span> <span class="o">==</span> <span class="n">token_config</span><span class="p">[</span><span class="s2">&quot;min_transactions&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_momentum</span><span class="p">():</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="si">}</span><span class="s2"> has momentum! Initiating buy.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inactive_task_flag</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="c1">#asyncio.create_task(add_trade_to_queue(self.mint, self.amount, &quot;buy&quot;))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="si">}</span><span class="s2"> does not have momentum. Unsubscribing.&quot;</span><span class="p">)</span>
+                <span class="kn">from</span> <span class="nn">src.update_stream</span> <span class="kn">import</span> <span class="n">unsubscribe_token_trade</span>
+                <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">unsubscribe_token_trade</span><span class="p">(</span><span class="n">token_address</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Token.has_momentum">
+<a class="viewcode-back" href="../../src.html#src.token.Token.has_momentum">[docs]</a>
+    <span class="k">def</span> <span class="nf">has_momentum</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Проверяет, есть ли у токена импульс.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">time_since_creation</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">history_transaction</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">time_since_creation</span> <span class="o">&lt;</span> <span class="n">token_config</span><span class="p">[</span><span class="s2">&quot;time_window&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buyers</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">token_config</span><span class="p">[</span><span class="s2">&quot;min_buyers&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Token.strategy">
+<a class="viewcode-back" href="../../src.html#src.token.Token.strategy">[docs]</a>
+    <span class="k">def</span> <span class="nf">strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Простая стратегия.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">activity</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_social_activity</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;txType&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;buy&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total_sols</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vSolInBondingCurve&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="nb">int</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vTokensInBondingCurve&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;tokenAmount&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;txType&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;sell&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total_sols</span> <span class="o">-=</span> <span class="nb">int</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vSolInBondingCurve&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="nb">int</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vTokensInBondingCurve&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;tokenAmount&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">activity</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">inactive_task_flag</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_sols</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">total_sols</span><span class="si">}</span><span class="s2">SOL and has social networks. Initiating buy.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inactive_task_flag</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">add_trade_to_queue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="s2">&quot;buy&quot;</span><span class="p">))</span>
+        
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">buy_flag</span> <span class="ow">and</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vSolInBondingCurve&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vTokensInBondingCurve&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">price_per_purchased_token</span> <span class="o">&gt;</span> <span class="mf">2.5</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Price went up 2.5x. Initiating sell.&quot;</span><span class="p">)</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">add_trade_to_queue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="s2">&quot;sell&quot;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">buy_flag</span> <span class="ow">and</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vSolInBondingCurve&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;vTokensInBondingCurve&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">price_per_purchased_token</span> <span class="o">&lt;</span> <span class="mf">0.85</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Price went down 15%. Initiating sell.&quot;</span><span class="p">)</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">add_trade_to_queue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="s2">&quot;sell&quot;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Token.process_transaction">
+<a class="viewcode-back" href="../../src.html#src.token.Token.process_transaction">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Обрабатывает транзакцию: добавляет в историю и решает что делать с токеном.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#self.control_actions(transaction)</span>
+        <span class="k">if</span> <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;txType&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;buy&quot;</span><span class="p">,</span> <span class="s2">&quot;sell&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_transaction</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">MemeCoinTradeBot</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Test_bot</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, nikish59.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

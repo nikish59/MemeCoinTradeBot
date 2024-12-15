@@ -14,7 +14,19 @@ release = '1.0'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../'))  # Путь на один уровень выше папки docs
+
+autoapi_dirs = ['../']
+
+extensions = [
+    'sphinx.ext.autodoc',    # Для извлечения docstring из Python-кода
+    'sphinx.ext.viewcode',   # Для отображения исходного кода
+    'sphinx.ext.napoleon'    # Для поддержки Google и NumPy стилей docstring
+]
+
+
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
