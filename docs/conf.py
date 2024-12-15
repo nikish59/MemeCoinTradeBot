@@ -16,13 +16,13 @@ release = '1.0'
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../'))  # Путь на один уровень выше папки docs
+sys.path.insert(0, os.path.abspath('..'))  # Путь к папке с вашим кодом
+
 extensions = [
-    'sphinx.ext.autodoc',    # Для извлечения docstring из Python-кода
-    'sphinx.ext.viewcode',   # Для отображения исходного кода
-    'sphinx.ext.napoleon'    # Для поддержки Google и NumPy стилей docstring
+    'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.napoleon'
 ]
-autoapi_dirs = ['../']  # Укажите путь к директории с вашим кодом
 
 
 templates_path = ['_templates']
