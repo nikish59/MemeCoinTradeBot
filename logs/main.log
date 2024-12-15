@@ -1,0 +1,387 @@
+2024-12-13 12:47:21,331 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-13 12:47:36,026 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-13 12:48:45,202 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-13 12:51:39,465 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-13 23:24:52,132 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-13 23:30:52,366 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-13 23:52:49,288 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-13 23:55:50,455 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 00:10:37,992 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-14 00:10:53,652 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 00:13:00,982 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 00:15:16,090 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 00:16:17,683 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 19:38:30,330 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 19:39:31,583 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 19:41:38,214 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 19:48:11,019 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-14 19:54:11,196 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 20:04:56,996 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-14 20:07:16,127 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 20:09:08,027 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-14 20:09:08,222 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-14 20:11:34,823 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 20:13:04,807 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-14 20:18:08,982 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 20:19:46,676 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-14 20:19:46,728 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-14 20:27:21,110 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-14 20:28:23,632 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-14 20:37:02,673 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\anaconda\envs\bot_dev\Lib\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-15 00:58:39,023 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-15 01:07:01,975 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.496.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Никита\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Никита\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Никита\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
+2024-12-15 01:08:01,631 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-15 01:08:01,682 - main - INFO - Достигнут лимит по созданным токенам. Прекращаем подписку.
+2024-12-15 01:12:11,452 - main - ERROR - Ожидание было отменено
+Traceback (most recent call last):
+  File "C:\Test_bot\main.py", line 31, in handle_messages
+    message = await asyncio.wait_for(websocket.recv(), timeout=handle_messages_config["timeout_duration"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.496.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Никита\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\websockets\asyncio\connection.py", line 294, in recv
+    return await self.recv_messages.get(decode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Никита\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\websockets\asyncio\messages.py", line 150, in get
+    frame = await self.frames.get(not self.closed)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Никита\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\websockets\asyncio\messages.py", line 51, in get
+    await self.get_waiter
+asyncio.exceptions.CancelledError
