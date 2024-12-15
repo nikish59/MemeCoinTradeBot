@@ -36,19 +36,19 @@
 <span id="websocket-client-module"></span><h1>websocket_client module<a class="headerlink" href="#module-websocket_client" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="websocket_client.WebSocketClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">websocket_client.</span></span><span class="sig-name descname"><span class="pre">WebSocketClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssl_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SSLContext</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/websocket_client.html#WebSocketClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#websocket_client.WebSocketClient" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">websocket_client.</span></span><span class="sig-name descname"><span class="pre">WebSocketClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssl_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SSLContext</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#websocket_client.WebSocketClient" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>WebSocketClient (Singleton): Класс WebSocketClient реализует паттерн Singleton, то есть при создании нового экземпляра класса возвращается тот же самый объект.
 Это гарантирует, что WebSocket соединение будет установлено только один раз, независимо от того, сколько раз вы обращаетесь к этому классу.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="websocket_client.WebSocketClient.close">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/websocket_client.html#WebSocketClient.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#websocket_client.WebSocketClient.close" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#websocket_client.WebSocketClient.close" title="Link to this definition">¶</a></dt>
 <dd><p>Закрытие WebSocket соединения.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="websocket_client.WebSocketClient.connect">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/websocket_client.html#WebSocketClient.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#websocket_client.WebSocketClient.connect" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#websocket_client.WebSocketClient.connect" title="Link to this definition">¶</a></dt>
 <dd><p>Подключение к WebSocket серверу. Подключение выполняется только один раз.</p>
 </dd></dl>
 
