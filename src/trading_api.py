@@ -17,7 +17,7 @@ from typing import List, Optional
 from config import setup_logger
 
 
-logger = setup_logger(name=__name__, log_file=__name__, level=logging.INFO)
+logger = setup_logger(name=__name__, log_file=__name__, level=logging.DEBUG)
 
 
 
